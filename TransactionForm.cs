@@ -1,18 +1,19 @@
 ﻿using System;
 using System.Linq;
 using System.Windows.Forms;
+using BankApp.Models;
+using BankApp.Data;
 
 namespace BankApp
 {
     public partial class TransactionForm : Form
     {
-        private LoginForm.User currentUser;
+        private User currentUser;
 
-        public TransactionForm(LoginForm.User user)
+        public TransactionForm(User user)
         {
             InitializeComponent();
             currentUser = user;
-    
         }
 
         private void btnConfirm_Click(object sender, EventArgs e)
@@ -32,38 +33,44 @@ namespace BankApp
                 return;
             }
 
-            if (currentUser.Balance < suma)
+            using (var context = new AppDbContext())
             {
-                MessageBox.Show("Fonduri insuficiente.");
-                return;
+                var senderUser = context.Users.FirstOrDefault(u => u.Id == currentUser.Id);
+                var recipient = context.Users.FirstOrDefault(u => u.IBAN == destIban);
+
+                if (recipient == null)
+                {
+                    MessageBox.Show("Destinatarul nu a fost găsit.");
+                    return;
+                }
+
+                if (senderUser.Balance < suma)
+                {
+                    MessageBox.Show("Fonduri insuficiente.");
+                    return;
+                }
+
+                // Executăm tranzacția
+                senderUser.Balance -= suma;
+                recipient.Balance += suma;
+
+                context.Transactions.Add(new Transaction
+                {
+                    FromUser = senderUser.IBAN,
+                    ToUser = recipient.IBAN,
+                    Amount = suma,
+                    Timestamp = DateTime.Now
+                });
+
+                context.SaveChanges(); // 🔐 Salvăm modificările
+
+                MessageBox.Show($"Ai trimis {suma} RON către {recipient.FullName} ({recipient.IBAN}).");
+
+                // Actualizăm currentUser local cu noul sold
+                currentUser.Balance = senderUser.Balance;
+
+                AplicatieBancara.SetNewForm(new UserDashboardForm(currentUser));
             }
-
-            var recipient = AplicatieBancara.users.FirstOrDefault(u => u.IBAN == destIban);
-
-            if (recipient == null)
-            {
-                MessageBox.Show("Destinatarul nu a fost găsit.");
-                return;
-            }
-
-            // Executăm tranzacția
-            currentUser.Balance -= suma;
-            recipient.Balance += suma;
-
-
-            AplicatieBancara.transactionHistory.Add(new Transaction
-            {
-                FromUser = currentUser.IBAN,
-                ToUser = recipient.IBAN,
-                Amount = suma,
-                Timestamp = DateTime.Now
-            });
-
-            MessageBox.Show($"Ai trimis {suma} RON către {recipient.FullName} ({recipient.IBAN}).");
-
-
-            // Revenim la dashboard
-            AplicatieBancara.SetNewForm(new UserDashboardForm(currentUser));
         }
 
         private void btnBack_Click(object sender, EventArgs e)

@@ -1,13 +1,16 @@
 ﻿using System;
+using System.Linq;
 using System.Windows.Forms;
+using BankApp.Models;
+using BankApp.Data;
 
 namespace BankApp
 {
     public partial class SettingsForm : Form
     {
-        private LoginForm.User currentUser;
+        private User currentUser;
 
-        public SettingsForm(LoginForm.User user)
+        public SettingsForm(User user)
         {
             InitializeComponent();
             currentUser = user;
@@ -37,7 +40,23 @@ namespace BankApp
                 return;
             }
 
-            currentUser.Password = newPass;
+            using (var context = new AppDbContext())
+            {
+                var userInDb = context.Users.FirstOrDefault(u => u.Id == currentUser.Id);
+
+                if (userInDb == null)
+                {
+                    MessageBox.Show("Eroare: utilizatorul nu a fost găsit în baza de date.");
+                    return;
+                }
+
+                userInDb.Password = newPass;
+                context.SaveChanges();
+
+                // Actualizează și în obiectul local
+                currentUser.Password = newPass;
+            }
+
             MessageBox.Show("Parola a fost schimbată cu succes!");
             AplicatieBancara.SetNewForm(new UserDashboardForm(currentUser));
         }

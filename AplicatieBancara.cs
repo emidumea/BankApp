@@ -1,22 +1,17 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
+﻿using BankApp.Models;
 using System.Windows.Forms;
 
 namespace BankApp
 {
     public static class AplicatieBancara
     {
+        // Eliminat codul vechi de simulare
+        // public static List<LoginForm.User> users = ...
 
-        public static List<LoginForm.User> users = new List<LoginForm.User>
-        {
-            new LoginForm.User { Username = "admin", Password = "admin123", FullName = "Admin Principal", Role = "Admin", IBAN = "RO00ADMIN0000000001", Balance = 0 },
-            new LoginForm.User { Username = "user1", Password = "user123", FullName = "Ion Popescu", Role = "User", IBAN = "RO49AAAA1B31007593840000", Balance = 1850.50M },
-            new LoginForm.User { Username = "user2", Password = "user123", FullName = "Maria Ionescu", Role = "User", IBAN = "RO59AAAA1B31007593840001", Balance = 500.00M }
-        };
-        public static List<Transaction> transactionHistory = new List<Transaction>();
+        // Dacă vrei să păstrezi tranzacțiile temporar, o listă locală (opțional)
+        // public static List<Transaction> transactionHistory = new List<Transaction>();
 
-        public static LoginForm.User currentUser;
+        public static User currentUser;  // Acum se folosește modelul real User
 
         private static Form _currentForm;
 

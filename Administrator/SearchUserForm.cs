@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Linq;
 using System.Windows.Forms;
+using BankApp.Models;
+using BankApp.Data;
 
 namespace BankApp.Administrator
 {
@@ -12,6 +14,16 @@ namespace BankApp.Administrator
 
             lvResults.View = View.Details;
             lvResults.FullRowSelect = true;
+
+            // Adaugă capetele de coloană (dacă nu sunt în Designer)
+            if (lvResults.Columns.Count == 0)
+            {
+                lvResults.Columns.Add("Username", 100);
+                lvResults.Columns.Add("Nume complet", 150);
+                lvResults.Columns.Add("IBAN", 160);
+                lvResults.Columns.Add("Sold", 80);
+                lvResults.Columns.Add("Rol", 80);
+            }
         }
 
         private void btnSearch_Click(object sender, EventArgs e)
@@ -24,26 +36,29 @@ namespace BankApp.Administrator
                 return;
             }
 
-            var results = AplicatieBancara.users
-                .Where(u => u.Username.ToLower().Contains(search) || u.IBAN.ToLower().Contains(search))
-                .ToList();
-
-            lvResults.Items.Clear();
-
-            if (results.Count == 0)
+            using (var context = new AppDbContext())
             {
-                MessageBox.Show("Nu s-a găsit niciun utilizator.");
-                return;
-            }
+                var results = context.Users
+                    .Where(u => u.Username.ToLower().Contains(search) || u.IBAN.ToLower().Contains(search))
+                    .ToList();
 
-            foreach (var u in results)
-            {
-                var item = new ListViewItem(u.Username);
-                item.SubItems.Add(u.FullName);
-                item.SubItems.Add(u.IBAN);
-                item.SubItems.Add(u.Balance.ToString("0.00"));
-                item.SubItems.Add(u.Role);
-                lvResults.Items.Add(item);
+                lvResults.Items.Clear();
+
+                if (results.Count == 0)
+                {
+                    MessageBox.Show("Nu s-a găsit niciun utilizator.");
+                    return;
+                }
+
+                foreach (var u in results)
+                {
+                    var item = new ListViewItem(u.Username);
+                    item.SubItems.Add(u.FullName);
+                    item.SubItems.Add(u.IBAN);
+                    item.SubItems.Add(u.Balance.ToString("0.00"));
+                    item.SubItems.Add(u.Role);
+                    lvResults.Items.Add(item);
+                }
             }
         }
 

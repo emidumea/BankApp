@@ -1,13 +1,14 @@
 ﻿using System;
 using System.Windows.Forms;
+using BankApp.Models;
 
 namespace BankApp
 {
     public partial class AccountDetailsForm : Form
     {
-        private LoginForm.User currentUser;
+        private User currentUser;
 
-        public AccountDetailsForm(LoginForm.User user)
+        public AccountDetailsForm(User user)
         {
             InitializeComponent();
             currentUser = user;

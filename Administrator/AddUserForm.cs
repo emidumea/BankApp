@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Linq;
 using System.Windows.Forms;
+using BankApp.Models;
+using BankApp.Data;
 
 namespace BankApp.Administrator
 {
@@ -32,29 +34,37 @@ namespace BankApp.Administrator
                 return;
             }
 
-            if (AplicatieBancara.users.Any(u => u.Username == username || u.IBAN == iban))
-            {
-                MessageBox.Show("Există deja un utilizator cu acest username sau IBAN.");
-                return;
-            }
-
             if (!decimal.TryParse(balanceText, out decimal balance) || balance < 0)
             {
                 MessageBox.Show("Soldul trebuie să fie un număr pozitiv.");
                 return;
             }
 
-            var newUser = new LoginForm.User
+            using (var context = new AppDbContext())
             {
-                Username = username,
-                Password = password,
-                FullName = fullName,
-                IBAN = iban,
-                Balance = balance,
-                Role = role
-            };
+                // Verificăm dacă utilizatorul sau IBAN-ul există
+                bool exists = context.Users.Any(u => u.Username == username || u.IBAN == iban);
+                if (exists)
+                {
+                    MessageBox.Show("Există deja un utilizator cu acest username sau IBAN.");
+                    return;
+                }
 
-            AplicatieBancara.users.Add(newUser);
+                // Adăugăm utilizatorul
+                var newUser = new User
+                {
+                    Username = username,
+                    Password = password,
+                    FullName = fullName,
+                    IBAN = iban,
+                    Balance = balance,
+                    Role = role
+                };
+
+                context.Users.Add(newUser);
+                context.SaveChanges();
+            }
+
             MessageBox.Show("Utilizatorul a fost creat cu succes.");
             AplicatieBancara.SetNewForm(new AdminDashboardForm(AplicatieBancara.currentUser));
         }

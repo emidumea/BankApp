@@ -1,13 +1,13 @@
 ﻿using System;
 using System.Windows.Forms;
-
+using BankApp.Models;
 namespace BankApp
 {
     public partial class UserDashboardForm : Form
     {
-        private LoginForm.User currentUser;
+        private User currentUser;
 
-        public UserDashboardForm(LoginForm.User user)
+        public UserDashboardForm(User user)
         {
             InitializeComponent();
             currentUser = user;
