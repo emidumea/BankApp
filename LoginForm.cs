@@ -44,6 +44,7 @@
 //        }
 //    }
 //}
+using BankApp.Administrator;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -98,8 +99,8 @@ namespace BankApp
 
             if (user.Role == "Admin")
             {
-                //AdminDashboardForm adminForm = new AdminDashboardForm(user);
-                //adminForm.Show();
+                AplicatieBancara.currentUser = user;
+                AplicatieBancara.SetNewForm(new AdminDashboardForm(user));
             }
             else
             {

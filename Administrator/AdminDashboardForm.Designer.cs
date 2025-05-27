@@ -83,7 +83,6 @@
             this.btnViewTransactions.TabIndex = 4;
             this.btnViewTransactions.Text = "Tranzactii sistem";
             this.btnViewTransactions.UseVisualStyleBackColor = true;
-            this.btnViewTransactions.Click += new System.EventHandler(this.btnViewTransactions_Click);
             // 
             // btnLogout
             // 

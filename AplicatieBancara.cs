@@ -48,7 +48,7 @@ namespace BankApp
         {
             DeleteAllControls();
             AddAllControls(form);
-            form.Dispose(); // opțional
+            form.Dispose();
         }
     }
 }

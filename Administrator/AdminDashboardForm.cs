@@ -14,10 +14,7 @@ namespace BankApp.Administrator
             lblAdminWelcome.Text = $"Bun venit, {currentUser.FullName}!";
         }
 
-        //private void btnAddUser_Click(object sender, EventArgs e)
-        //{
-        //    AplicatieBancara.SetNewForm(new AddUserForm());
-        //}
+
 
         //private void btnSearchUser_Click(object sender, EventArgs e)
         //{
@@ -37,6 +34,21 @@ namespace BankApp.Administrator
         private void btnLogout_Click(object sender, EventArgs e)
         {
             AplicatieBancara.SetNewForm(new LoginForm());
+        }
+
+        private void btnAddUser_Click(object sender, EventArgs e)
+        {
+            AplicatieBancara.SetNewForm(new AddUserForm());
+        }
+
+        private void btnSearchUser_Click(object sender, EventArgs e)
+        {
+            AplicatieBancara.SetNewForm(new SearchUserForm());
+        }
+
+        private void btnResetPassword_Click(object sender, EventArgs e)
+        {
+            AplicatieBancara.SetNewForm(new ResetPasswordForm());
         }
     }
 }
