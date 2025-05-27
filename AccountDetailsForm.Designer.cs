@@ -63,12 +63,14 @@
             // 
             // btnClose
             // 
-            this.btnClose.Location = new System.Drawing.Point(369, 256);
+            this.btnClose.Location = new System.Drawing.Point(293, 223);
             this.btnClose.Name = "btnClose";
             this.btnClose.Size = new System.Drawing.Size(75, 23);
             this.btnClose.TabIndex = 3;
-            this.btnClose.Text = "Inchide";
+            this.btnClose.Text = "Inapoi";
             this.btnClose.UseVisualStyleBackColor = true;
+            this.btnClose.Click += new System.EventHandler(this.btnClose_Click);
+
             // 
             // AccountDetailsForm
             // 

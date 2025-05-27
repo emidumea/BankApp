@@ -20,7 +20,8 @@ namespace BankApp
 
         private void btnClose_Click(object sender, EventArgs e)
         {
-            this.Close();
+            AplicatieBancara.SetNewForm(new UserDashboardForm(AplicatieBancara.currentUser));
+
         }
     }
 }

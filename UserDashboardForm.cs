@@ -16,9 +16,9 @@ namespace BankApp
 
         private void detailsBtn_Click(object sender, EventArgs e)
         {
-            AccountDetailsForm detailsForm = new AccountDetailsForm(currentUser);
-            detailsForm.ShowDialog();
+            AplicatieBancara.SetNewForm(new AccountDetailsForm(AplicatieBancara.currentUser));
         }
+
 
         //private void transactionBtn_Click(object sender, EventArgs e)
         //{
@@ -40,8 +40,12 @@ namespace BankApp
 
         private void disconnectBtn_Click(object sender, EventArgs e)
         {
-            this.Close(); // Închide dashboard-ul
-            Application.Restart(); // Repornim aplicația și revenim la login
+            AplicatieBancara.SetNewForm(new LoginForm());
+        }
+
+        private void transactionBtn_Click(object sender, EventArgs e)
+        {
+            AplicatieBancara.SetNewForm(new TransactionForm(currentUser));
         }
     }
 }

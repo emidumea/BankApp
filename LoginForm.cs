@@ -70,11 +70,12 @@ namespace BankApp
         }
 
         // Simulăm o "bază de date"
-        private List<User> users = new List<User>
-        {
-            new User { Username = "admin", Password = "admin123", FullName = "Admin Principal", Role = "Admin", IBAN = "RO00ADMIN0000000001", Balance = 0 },
-            new User { Username = "user1", Password = "user123", FullName = "Ion Popescu", Role = "User", IBAN = "RO49AAAA1B31007593840000", Balance = 1850.50M }
-        };
+        //private List<User> users = new List<User>
+        //{
+        //    new User { Username = "admin", Password = "admin123", FullName = "Admin Principal", Role = "Admin", IBAN = "RO00ADMIN0000000001", Balance = 0 },
+        //    new User { Username = "user1", Password = "user123", FullName = "Ion Popescu", Role = "User", IBAN = "RO49AAAA1B31007593840000", Balance = 1850.50M },
+        //    new User { Username = "user2", Password = "user2", FullName = "Marius Tamas", Role = "User", IBAN = "RO49AAAA1B31007593840075", Balance = 1600.50M }
+        //};
 
 
 
@@ -83,13 +84,15 @@ namespace BankApp
             string username = txtUsername.Text.Trim();
             string password = txtPassword.Text;
 
-            var user = users.FirstOrDefault(u => u.Username == username && u.Password == password);
+            var user = AplicatieBancara.users.FirstOrDefault(u => u.Username == username && u.Password == password);
 
             if (user == null)
             {
                 MessageBox.Show("Utilizator sau parolă incorecte.");
                 return;
             }
+
+            AplicatieBancara.currentUser = user; 
 
             MessageBox.Show($"Autentificare reușită ca {user.Role}!");
 
@@ -100,11 +103,9 @@ namespace BankApp
             }
             else
             {
-                UserDashboardForm userForm = new UserDashboardForm(user);
-                userForm.Show();
+                AplicatieBancara.SetNewForm(new UserDashboardForm(user));
             }
-
-            this.Hide();
         }
+
     }
 }
