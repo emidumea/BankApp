@@ -14,6 +14,8 @@ namespace BankApp
             new LoginForm.User { Username = "user1", Password = "user123", FullName = "Ion Popescu", Role = "User", IBAN = "RO49AAAA1B31007593840000", Balance = 1850.50M },
             new LoginForm.User { Username = "user2", Password = "user123", FullName = "Maria Ionescu", Role = "User", IBAN = "RO59AAAA1B31007593840001", Balance = 500.00M }
         };
+        public static List<Transaction> transactionHistory = new List<Transaction>();
+
         public static LoginForm.User currentUser;
 
         private static Form _currentForm;

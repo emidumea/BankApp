@@ -75,6 +75,7 @@
             this.historyBtn.TabIndex = 3;
             this.historyBtn.Text = "Istoric Tranzactii";
             this.historyBtn.UseVisualStyleBackColor = true;
+            this.historyBtn.Click += new System.EventHandler(this.historyBtn_Click);
             // 
             // settingsBtn
             // 
@@ -84,6 +85,7 @@
             this.settingsBtn.TabIndex = 4;
             this.settingsBtn.Text = "Setari";
             this.settingsBtn.UseVisualStyleBackColor = true;
+            this.settingsBtn.Click += new System.EventHandler(this.settingsBtn_Click);
             // 
             // disconnectBtn
             // 

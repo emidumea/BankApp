@@ -38,6 +38,7 @@ namespace BankApp
         //    settingsForm.ShowDialog();
         //}
 
+
         private void disconnectBtn_Click(object sender, EventArgs e)
         {
             AplicatieBancara.SetNewForm(new LoginForm());
@@ -47,5 +48,16 @@ namespace BankApp
         {
             AplicatieBancara.SetNewForm(new TransactionForm(currentUser));
         }
+
+        private void historyBtn_Click(object sender, EventArgs e)
+        {
+            AplicatieBancara.SetNewForm(new TransactionHistoryForm(currentUser));
+        }
+
+        private void settingsBtn_Click(object sender, EventArgs e)
+        {
+            AplicatieBancara.SetNewForm(new SettingsForm(currentUser));
+        }
+
     }
 }

@@ -50,6 +50,15 @@ namespace BankApp
             currentUser.Balance -= suma;
             recipient.Balance += suma;
 
+
+            AplicatieBancara.transactionHistory.Add(new Transaction
+            {
+                FromUser = currentUser.IBAN,
+                ToUser = recipient.IBAN,
+                Amount = suma,
+                Timestamp = DateTime.Now
+            });
+
             MessageBox.Show($"Ai trimis {suma} RON către {recipient.FullName} ({recipient.IBAN}).");
 
 
