@@ -16,14 +16,13 @@ namespace BankApp
             InitializeComponent();
             currentUser = user;
 
-            // Asigură-te că combobox-ul are opțiuni
             if (cmbFilter.Items.Count == 0)
             {
                 cmbFilter.Items.AddRange(new string[] { "Toate", "Trimise", "Primite" });
             }
 
             cmbFilter.SelectedIndexChanged += (s, e) => LoadTransactions();
-            cmbFilter.SelectedIndex = 0; // declanșează primul load
+            cmbFilter.SelectedIndex = 0;
         }
 
         private void LoadTransactions()

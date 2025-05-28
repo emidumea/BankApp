@@ -3,6 +3,10 @@ using System.ComponentModel.DataAnnotations;
 
 namespace BankApp.Models
 {
+
+    /// <summary>
+    /// Reprezintă o tranzacție între doi utilizatori (transfer de fonduri).
+    /// </summary>
     public class Transaction
     {
         [Key]

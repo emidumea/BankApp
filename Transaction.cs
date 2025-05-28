@@ -7,6 +7,9 @@ using System.Threading.Tasks;
 
 namespace BankApp
 {
+    /// <summary>
+    /// Reprezintă o tranzacție între doi utilizatori (transfer de fonduri).
+    /// </summary>
     public class Transaction
     {
         [Key]

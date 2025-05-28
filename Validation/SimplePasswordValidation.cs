@@ -1,16 +1,18 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using BankApp.Exceptions;
 
 namespace BankApp.Validation
 {
+
+    /// <summary>
+    /// Strategie simplă pentru validarea parolei (minim 3 caractere).
+    /// </summary>
     public class SimplePasswordValidation : IValidationStrategy
     {
         public bool IsValid(string input)
         {
-            return !string.IsNullOrWhiteSpace(input) && input.Length >= 3;
+            if (string.IsNullOrWhiteSpace(input) || input.Length < 3)
+                throw new PasswordValidationException("Parola trebuie să aibă minim 3 caractere.");
+            return true;
         }
     }
 }

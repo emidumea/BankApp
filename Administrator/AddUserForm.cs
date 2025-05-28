@@ -4,9 +4,13 @@ using System.Windows.Forms;
 using BankApp.Models;
 using BankApp.Data;
 using BankApp.Validation;
+using BankApp.Exceptions;
 
 namespace BankApp.Administrator
 {
+    /// <summary>
+    /// Formular pentru adăugarea unui nou utilizator de către administrator.
+    /// </summary>
     public partial class AddUserForm : Form
     {
         public AddUserForm()
@@ -18,6 +22,10 @@ namespace BankApp.Administrator
             cmbRole.SelectedIndex = 0;
         }
 
+
+        /// <summary>
+        /// Creează un utilizator nou pe baza datelor introduse, după validare completă.
+        /// </summary>
         private void btnCreate_Click(object sender, EventArgs e)
         {
             string username = txtUsername.Text.Trim();
@@ -27,56 +35,74 @@ namespace BankApp.Administrator
             string role = cmbRole.SelectedItem.ToString();
             string balanceText = txtBalance.Text.Trim();
 
-            if (string.IsNullOrWhiteSpace(username) || string.IsNullOrWhiteSpace(password)
-                || string.IsNullOrWhiteSpace(fullName) || string.IsNullOrWhiteSpace(iban)
-                || string.IsNullOrWhiteSpace(balanceText))
+            try
             {
-                MessageBox.Show("Completează toate câmpurile.");
-                return;
-            }
-
-            // Strategy Pattern – validare parola
-            var validator = new PasswordValidator(new StrongPasswordValidation());
-            if (!validator.Validate(password))
-            {
-                MessageBox.Show("Parola trebuie să aibă minim 8 caractere, o literă mare, o literă mică și o cifră.");
-                return;
-            }
-
-            if (!decimal.TryParse(balanceText, out decimal balance) || balance < 0)
-            {
-                MessageBox.Show("Soldul trebuie să fie un număr pozitiv.");
-                return;
-            }
-
-            using (var context = new AppDbContext())
-            {
-                bool exists = context.Users.Any(u => u.Username == username || u.IBAN == iban);
-                if (exists)
+                if (string.IsNullOrWhiteSpace(username) || string.IsNullOrWhiteSpace(password) ||
+                    string.IsNullOrWhiteSpace(fullName) || string.IsNullOrWhiteSpace(iban) ||
+                    string.IsNullOrWhiteSpace(balanceText))
                 {
-                    MessageBox.Show("Există deja un utilizator cu acest username sau IBAN.");
-                    return;
+                    throw new FormValidationException("Completează toate câmpurile.");
                 }
 
-                var newUser = new User
+                var validator = new PasswordValidator(new StrongPasswordValidation());
+                if (!validator.Validate(password))
                 {
-                    Username = username,
-                    Password = password,
-                    FullName = fullName,
-                    IBAN = iban,
-                    Balance = balance,
-                    Role = role
-                };
+                    throw new PasswordValidationException("Parola trebuie să aibă minim 8 caractere, o literă mare, una mică și o cifră.");
+                }
 
-                context.Users.Add(newUser);
-                context.SaveChanges();
+                if (!decimal.TryParse(balanceText, out decimal balance) || balance < 0)
+                {
+                    throw new FormValidationException("Soldul trebuie să fie un număr pozitiv.");
+                }
+
+                using (var context = new AppDbContext())
+                {
+                    bool exists = context.Users.Any(u => u.Username == username || u.IBAN == iban);
+                    if (exists)
+                    {
+                        throw new DuplicateUserException("Există deja un utilizator cu acest username sau IBAN.");
+                    }
+
+                    var newUser = new User
+                    {
+                        Username = username,
+                        Password = password,
+                        FullName = fullName,
+                        IBAN = iban,
+                        Balance = balance,
+                        Role = role
+                    };
+
+                    context.Users.Add(newUser);
+                    context.SaveChanges();
+                }
+
+                MessageBox.Show("Utilizatorul a fost creat cu succes.");
+                AplicatieBancara.SetNewForm(new AdminDashboardForm(AplicatieBancara.currentUser));
             }
-
-            MessageBox.Show("Utilizatorul a fost creat cu succes.");
-            AplicatieBancara.SetNewForm(new AdminDashboardForm(AplicatieBancara.currentUser));
+            catch (FormValidationException ex)
+            {
+                MessageBox.Show($"Eroare de validare formular: {ex.Message}");
+            }
+            catch (PasswordValidationException ex)
+            {
+                MessageBox.Show($"Eroare de validare parolă: {ex.Message}");
+            }
+            catch (DuplicateUserException ex)
+            {
+                MessageBox.Show($"Eroare: {ex.Message}");
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Eroare necunoscută: {ex.Message}");
+            }
         }
-    
 
+
+
+        /// <summary>
+        /// Revine la dashboard-ul administratorului.
+        /// </summary>
         private void btnBack_Click(object sender, EventArgs e)
         {
             AplicatieBancara.SetNewForm(new AdminDashboardForm(AplicatieBancara.currentUser));

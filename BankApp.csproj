@@ -187,6 +187,12 @@
     </Compile>
     <Compile Include="AplicatieBancara.cs" />
     <Compile Include="Data\AppDbContext.cs" />
+    <Compile Include="Exceptions\DuplicateUserException.cs" />
+    <Compile Include="Exceptions\FormValidationException.cs" />
+    <Compile Include="Exceptions\InsuficientFoundsException.cs" />
+    <Compile Include="Exceptions\PasswordValidationException.cs" />
+    <Compile Include="Exceptions\TransactionValidationException.cs" />
+    <Compile Include="Exceptions\UserNotFoundException.cs" />
     <Compile Include="LoginForm.cs">
       <SubType>Form</SubType>
     </Compile>

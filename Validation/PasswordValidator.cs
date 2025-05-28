@@ -6,6 +6,9 @@ using System.Threading.Tasks;
 
 namespace BankApp.Validation
 {
+    /// <summary>
+    /// Clasă care validează parolele folosind strategia aleasă.
+    /// </summary>
     public class PasswordValidator
     {
         private readonly IValidationStrategy _strategy;
@@ -15,6 +18,12 @@ namespace BankApp.Validation
             _strategy = strategy;
         }
 
+
+        /// <summary>
+        /// Validează parola. Aruncă PasswordValidationException dacă nu e validă.
+        /// </summary>
+        /// <param name="input">Parola introdusă.</param>
+        /// <returns>True dacă e validă.</returns>
         public bool Validate(string input)
         {
             return _strategy.IsValid(input);

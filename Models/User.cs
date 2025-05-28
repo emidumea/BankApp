@@ -2,6 +2,9 @@
 
 namespace BankApp.Models
 {
+    /// <summary>
+    /// Reprezintă un utilizator al aplicației bancare (client sau administrator).
+    /// </summary>
     public class User
     {
         [Key]

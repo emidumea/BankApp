@@ -6,6 +6,10 @@ using BankApp.Data;
 
 namespace BankApp.Administrator
 {
+
+    /// <summary>
+    /// Formular pentru căutarea utilizatorilor după username sau IBAN.
+    /// </summary>
     public partial class SearchUserForm : Form
     {
         public SearchUserForm()
@@ -26,6 +30,9 @@ namespace BankApp.Administrator
             }
         }
 
+        /// <summary>
+        /// Caută utilizatorii după textul introdus și afișează rezultatele.
+        /// </summary>
         private void btnSearch_Click(object sender, EventArgs e)
         {
             string search = txtSearch.Text.Trim().ToLower();
@@ -62,6 +69,9 @@ namespace BankApp.Administrator
             }
         }
 
+        /// <summary>
+        /// Revine la dashboard-ul administratorului.
+        /// </summary>
         private void btnBack_Click(object sender, EventArgs e)
         {
             AplicatieBancara.SetNewForm(new AdminDashboardForm(AplicatieBancara.currentUser));
