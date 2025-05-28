@@ -1,0 +1,9 @@
+C:\anu3\Sem II eu\IP\BankApp.Validation\bin\Debug\BankApp.Validation.dll
+C:\anu3\Sem II eu\IP\BankApp.Validation\bin\Debug\BankApp.Validation.pdb
+C:\anu3\Sem II eu\IP\BankApp.Validation\bin\Debug\BankApp.Exceptions.dll
+C:\anu3\Sem II eu\IP\BankApp.Validation\bin\Debug\BankApp.Exceptions.pdb
+C:\anu3\Sem II eu\IP\BankApp.Validation\obj\Debug\BankApp.Validation.csproj.AssemblyReference.cache
+C:\anu3\Sem II eu\IP\BankApp.Validation\obj\Debug\BankApp.Validation.csproj.CoreCompileInputs.cache
+C:\anu3\Sem II eu\IP\BankApp.Validation\obj\Debug\BankApp..E0B20385.Up2Date
+C:\anu3\Sem II eu\IP\BankApp.Validation\obj\Debug\BankApp.Validation.dll
+C:\anu3\Sem II eu\IP\BankApp.Validation\obj\Debug\BankApp.Validation.pdb

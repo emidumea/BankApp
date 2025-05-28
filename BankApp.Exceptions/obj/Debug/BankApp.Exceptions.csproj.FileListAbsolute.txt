@@ -1,0 +1,6 @@
+C:\anu3\Sem II eu\IP\BankApp.Exceptions\bin\Debug\BankApp.Exceptions.dll
+C:\anu3\Sem II eu\IP\BankApp.Exceptions\bin\Debug\BankApp.Exceptions.pdb
+C:\anu3\Sem II eu\IP\BankApp.Exceptions\obj\Debug\BankApp.Exceptions.csproj.AssemblyReference.cache
+C:\anu3\Sem II eu\IP\BankApp.Exceptions\obj\Debug\BankApp.Exceptions.csproj.CoreCompileInputs.cache
+C:\anu3\Sem II eu\IP\BankApp.Exceptions\obj\Debug\BankApp.Exceptions.dll
+C:\anu3\Sem II eu\IP\BankApp.Exceptions\obj\Debug\BankApp.Exceptions.pdb
