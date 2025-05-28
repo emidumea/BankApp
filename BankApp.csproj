@@ -222,6 +222,10 @@
     <Compile Include="UserDashboardForm.Designer.cs">
       <DependentUpon>UserDashboardForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="Validation\IValidationStrategy.cs" />
+    <Compile Include="Validation\PasswordValidator.cs" />
+    <Compile Include="Validation\SimplePasswordValidation.cs" />
+    <Compile Include="Validation\StrongPasswordValidation.cs" />
     <EmbeddedResource Include="AccountDetailsForm.resx">
       <DependentUpon>AccountDetailsForm.cs</DependentUpon>
     </EmbeddedResource>

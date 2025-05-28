@@ -3,6 +3,7 @@ using System.Linq;
 using System.Windows.Forms;
 using BankApp.Data;
 using BankApp.Models;
+using BankApp.Validation;
 
 namespace BankApp.Administrator
 {
@@ -33,6 +34,13 @@ namespace BankApp.Administrator
                 return;
             }
 
+            var validator = new PasswordValidator(new StrongPasswordValidation());
+            if (!validator.Validate(newPass))
+            {
+                MessageBox.Show("Parola trebuie să aibă minim 6 caractere și cel puțin o cifră.");
+                return;
+            }
+
             using (var context = new AppDbContext())
             {
                 var user = context.Users.FirstOrDefault(u => u.Username == username);
@@ -51,6 +59,7 @@ namespace BankApp.Administrator
 
             AplicatieBancara.SetNewForm(new AdminDashboardForm(AplicatieBancara.currentUser));
         }
+
 
         private void btnBack_Click(object sender, EventArgs e)
         {

@@ -3,6 +3,7 @@ using System.Linq;
 using System.Windows.Forms;
 using BankApp.Models;
 using BankApp.Data;
+using BankApp.Validation;
 
 namespace BankApp.Administrator
 {
@@ -34,6 +35,14 @@ namespace BankApp.Administrator
                 return;
             }
 
+            // Strategy Pattern – validare parola
+            var validator = new PasswordValidator(new StrongPasswordValidation());
+            if (!validator.Validate(password))
+            {
+                MessageBox.Show("Parola trebuie să aibă minim 8 caractere, o literă mare, o literă mică și o cifră.");
+                return;
+            }
+
             if (!decimal.TryParse(balanceText, out decimal balance) || balance < 0)
             {
                 MessageBox.Show("Soldul trebuie să fie un număr pozitiv.");
@@ -42,7 +51,6 @@ namespace BankApp.Administrator
 
             using (var context = new AppDbContext())
             {
-                // Verificăm dacă utilizatorul sau IBAN-ul există
                 bool exists = context.Users.Any(u => u.Username == username || u.IBAN == iban);
                 if (exists)
                 {
@@ -50,7 +58,6 @@ namespace BankApp.Administrator
                     return;
                 }
 
-                // Adăugăm utilizatorul
                 var newUser = new User
                 {
                     Username = username,
@@ -68,6 +75,7 @@ namespace BankApp.Administrator
             MessageBox.Show("Utilizatorul a fost creat cu succes.");
             AplicatieBancara.SetNewForm(new AdminDashboardForm(AplicatieBancara.currentUser));
         }
+    
 
         private void btnBack_Click(object sender, EventArgs e)
         {

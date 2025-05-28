@@ -3,6 +3,7 @@ using System.Linq;
 using System.Windows.Forms;
 using BankApp.Models;
 using BankApp.Data;
+using BankApp.Validation;
 
 namespace BankApp
 {
@@ -40,6 +41,14 @@ namespace BankApp
                 return;
             }
 
+            // Strategy Pattern – validare parola
+            var validator = new PasswordValidator(new StrongPasswordValidation());
+            if (!validator.Validate(newPass))
+            {
+                MessageBox.Show("Parola nouă trebuie să aibă minim 8 caractere, o literă mare, o literă mică și o cifră.");
+                return;
+            }
+
             using (var context = new AppDbContext())
             {
                 var userInDb = context.Users.FirstOrDefault(u => u.Id == currentUser.Id);
@@ -53,13 +62,13 @@ namespace BankApp
                 userInDb.Password = newPass;
                 context.SaveChanges();
 
-                // Actualizează și în obiectul local
                 currentUser.Password = newPass;
             }
 
             MessageBox.Show("Parola a fost schimbată cu succes!");
             AplicatieBancara.SetNewForm(new UserDashboardForm(currentUser));
         }
+
 
         private void btnBack_Click(object sender, EventArgs e)
         {
