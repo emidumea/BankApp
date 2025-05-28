@@ -2,7 +2,6 @@
 using System.Linq;
 using System.Windows.Forms;
 using BankApp.Data;
-using BankApp.Models;
 using SQLitePCL;
 
 namespace BankApp
@@ -14,7 +13,7 @@ namespace BankApp
         {
             Batteries_V2.Init();
 
-            using (var context = new AppDbContext())
+            using (var context = new BankApp.Data.Data.AppDbContext())
             {
                 context.Database.EnsureCreated();
 

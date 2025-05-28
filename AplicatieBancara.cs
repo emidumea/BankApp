@@ -1,4 +1,4 @@
-﻿using BankApp.Models;
+﻿using BankApp.Data;
 using System.Windows.Forms;
 
 namespace BankApp

@@ -1,9 +1,9 @@
 ﻿using BankApp.Data;
-using BankApp.Models;
 using BankApp.Exceptions;
 using System;
 using System.Linq;
 using System.Windows.Forms;
+using BankApp.Validation;
 
 namespace BankApp
 {
@@ -42,7 +42,7 @@ namespace BankApp
                 if (!decimal.TryParse(sumaText, out decimal suma) || suma <= 0)
                     throw new TransactionValidationException("Suma introdusă nu este validă.");
 
-                using (var context = new AppDbContext())
+                using (var context = new BankApp.Data.Data.AppDbContext())
                 {
                     var senderUser = context.Users.FirstOrDefault(u => u.Id == currentUser.Id)
                         ?? throw new TransactionValidationException("Expeditorul nu a fost găsit.");

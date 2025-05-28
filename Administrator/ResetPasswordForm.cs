@@ -3,7 +3,6 @@ using System.Linq;
 using System.Windows.Forms;
 using BankApp.Data;
 using BankApp.Exceptions;
-using BankApp.Models;
 using BankApp.Validation;
 
 namespace BankApp.Administrator
@@ -43,7 +42,7 @@ namespace BankApp.Administrator
                 if (!validator.Validate(newPass))
                     throw new PasswordValidationException("Parola trebuie să aibă minim 8 caractere, o literă mare, una mică și o cifră.");
 
-                using (var context = new AppDbContext())
+                using (var context = new BankApp.Data.Data.AppDbContext())
                 {
                     var user = context.Users.FirstOrDefault(u => u.Username == username);
                     if (user == null)

@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Linq;
 using System.Windows.Forms;
-using BankApp.Models;
 using BankApp.Data;
 
 namespace BankApp.Administrator
@@ -43,7 +42,7 @@ namespace BankApp.Administrator
                 return;
             }
 
-            using (var context = new AppDbContext())
+            using (var context = new BankApp.Data.Data.AppDbContext())
             {
                 var results = context.Users
                     .Where(u => u.Username.ToLower().Contains(search) || u.IBAN.ToLower().Contains(search))

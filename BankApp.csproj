@@ -186,21 +186,12 @@
       <DependentUpon>SearchUserForm.cs</DependentUpon>
     </Compile>
     <Compile Include="AplicatieBancara.cs" />
-    <Compile Include="Data\AppDbContext.cs" />
-    <Compile Include="Exceptions\DuplicateUserException.cs" />
-    <Compile Include="Exceptions\FormValidationException.cs" />
-    <Compile Include="Exceptions\InsuficientFoundsException.cs" />
-    <Compile Include="Exceptions\PasswordValidationException.cs" />
-    <Compile Include="Exceptions\TransactionValidationException.cs" />
-    <Compile Include="Exceptions\UserNotFoundException.cs" />
     <Compile Include="LoginForm.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="LoginForm.Designer.cs">
       <DependentUpon>LoginForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="Models\Transaction.cs" />
-    <Compile Include="Models\User.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SettingsForm.cs">
@@ -209,7 +200,6 @@
     <Compile Include="SettingsForm.Designer.cs">
       <DependentUpon>SettingsForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="Transaction.cs" />
     <Compile Include="TransactionForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -228,10 +218,6 @@
     <Compile Include="UserDashboardForm.Designer.cs">
       <DependentUpon>UserDashboardForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="Validation\IValidationStrategy.cs" />
-    <Compile Include="Validation\PasswordValidator.cs" />
-    <Compile Include="Validation\SimplePasswordValidation.cs" />
-    <Compile Include="Validation\StrongPasswordValidation.cs" />
     <EmbeddedResource Include="AccountDetailsForm.resx">
       <DependentUpon>AccountDetailsForm.cs</DependentUpon>
     </EmbeddedResource>
@@ -289,6 +275,23 @@
     <None Include="runtimes\win-x86\native\e_sqlite3.dll">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\BankApp.Data\BankApp.Data.csproj">
+      <Project>{15ebba32-3f2f-41b7-b61e-94f0f8b162cb}</Project>
+      <Name>BankApp.Data</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\BankApp.Exceptions\BankApp.Exceptions.csproj">
+      <Project>{979c4624-17da-4351-a22b-9156f515154e}</Project>
+      <Name>BankApp.Exceptions</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\BankApp.Validation\BankApp.Validation.csproj">
+      <Project>{865ceff4-05b0-49e2-9f9f-da74a5b84f52}</Project>
+      <Name>BankApp.Validation</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Models\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">

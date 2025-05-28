@@ -2,7 +2,6 @@
 using System.Linq;
 using System.Windows.Forms;
 using System.Collections.Generic;
-using BankApp.Models;
 using BankApp.Data;
 
 namespace BankApp
@@ -32,7 +31,7 @@ namespace BankApp
             string userIban = currentUser.IBAN;
             string selectedFilter = cmbFilter.SelectedItem?.ToString();
 
-            using (var context = new AppDbContext())
+            using (var context = new BankApp.Data.Data.AppDbContext())
             {
                 IEnumerable<Transaction> filtered = context.Transactions.ToList();
 

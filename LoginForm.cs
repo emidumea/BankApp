@@ -1,6 +1,5 @@
 ﻿using BankApp.Administrator;
 using BankApp.Data;
-using BankApp.Models;
 using BankApp.Validation;
 using BankApp.Exceptions;
 using System;
@@ -37,7 +36,7 @@ namespace BankApp
                 if (!validator.IsValid(password))
                     throw new PasswordValidationException("Parola introdusă este prea scurtă (minim 4 caractere).");
 
-                using (var context = new AppDbContext())
+                using (var context = new BankApp.Data.Data.AppDbContext())
                 {
                     var user = context.Users.FirstOrDefault(u => u.Username == username && u.Password == password);
 

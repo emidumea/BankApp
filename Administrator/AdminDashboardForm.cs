@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Windows.Forms;
-using BankApp.Models;
+using BankApp.Data;
 
 namespace BankApp.Administrator
 {

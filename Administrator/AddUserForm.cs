@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Linq;
 using System.Windows.Forms;
-using BankApp.Models;
 using BankApp.Data;
 using BankApp.Validation;
 using BankApp.Exceptions;
@@ -55,7 +54,7 @@ namespace BankApp.Administrator
                     throw new FormValidationException("Soldul trebuie să fie un număr pozitiv.");
                 }
 
-                using (var context = new AppDbContext())
+                using (var context = new BankApp.Data.Data.AppDbContext())
                 {
                     bool exists = context.Users.Any(u => u.Username == username || u.IBAN == iban);
                     if (exists)

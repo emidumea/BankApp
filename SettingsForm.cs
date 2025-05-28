@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Linq;
 using System.Windows.Forms;
-using BankApp.Models;
 using BankApp.Data;
 using BankApp.Validation;
 
@@ -44,7 +43,7 @@ namespace BankApp
                 var validator = new PasswordValidator(new StrongPasswordValidation());
                 validator.Validate(newPass); // dacă e invalidă, aruncă PasswordValidationException
 
-                using (var context = new AppDbContext())
+                using (var context = new BankApp.Data.Data.AppDbContext())
                 {
                     var userInDb = context.Users.FirstOrDefault(u => u.Id == currentUser.Id);
 
