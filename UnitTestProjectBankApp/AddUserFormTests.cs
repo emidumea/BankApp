@@ -133,6 +133,7 @@ namespace UnitTestProjectBankApp
                 Balance = -100,
                 Role = "User"
             };
+            // aaa
 
             var validationContext = new System.ComponentModel.DataAnnotations.ValidationContext(user);
             var validationResults = new List<System.ComponentModel.DataAnnotations.ValidationResult>();
