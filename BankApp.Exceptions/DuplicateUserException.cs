@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 namespace BankApp.Exceptions
 {
     /// <summary>
-    /// Excepție aruncată când există deja un utilizator cu același username sau IBAN.
+    /// Excepție aruncată când există deja un utilizator cu același username sau IBAN...
     /// </summary>
     public class DuplicateUserException : Exception
     {
