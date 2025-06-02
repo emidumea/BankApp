@@ -16,13 +16,10 @@
  *                                                                        *
  **************************************************************************/
 
-
 using System;
-using System.Linq;
 using System.Windows.Forms;
-using BankApp.Data;
 using BankApp.Exceptions;
-using BankApp.Validation;
+using BankApp;
 
 namespace BankApp.Administrator
 {
@@ -31,14 +28,16 @@ namespace BankApp.Administrator
     /// </summary>
     public partial class ResetPasswordForm : Form
     {
+        /// <summary>
+        /// Constructorul formularului pentru resetarea parolei.
+        /// </summary>
         public ResetPasswordForm()
         {
             InitializeComponent();
         }
 
-
         /// <summary>
-        /// Confirmă resetarea parolei utilizatorului indicat.
+        /// Execută logica de resetare a parolei prin AppService.
         /// </summary>
         private void btnReset_Click(object sender, EventArgs e)
         {
@@ -48,52 +47,32 @@ namespace BankApp.Administrator
 
             try
             {
-                if (string.IsNullOrWhiteSpace(username) ||
-                    string.IsNullOrWhiteSpace(newPass) ||
-                    string.IsNullOrWhiteSpace(confirmPass))
-                    throw new FormValidationException("Completează toate câmpurile.");
-
-                if (newPass != confirmPass)
-                    throw new FormValidationException("Parolele nu coincid.");
-
-                // Validare parolă
-                var validator = new PasswordValidator(new StrongPasswordValidation());
-                if (!validator.Validate(newPass))
-                    throw new PasswordValidationException("Parola trebuie să aibă minim 8 caractere, o literă mare, una mică și o cifră.");
-
                 using (var context = new BankApp.Data.Data.AppDbContext())
                 {
-                    var user = context.Users.FirstOrDefault(u => u.Username == username);
-                    if (user == null)
-                        throw new UserNotFoundException("Utilizatorul nu a fost găsit.");
-
-                    user.Password = newPass;
-                    context.SaveChanges();
-
-                    MessageBox.Show($"Parola pentru utilizatorul {user.Username} a fost resetată cu succes.");
+                    var service = new AppService(context);
+                    service.AdminResetPassword(username, newPass, confirmPass);
                 }
 
+                MessageBox.Show($"Parola pentru utilizatorul {username} a fost resetată cu succes.");
                 AplicatieBancara.SetNewForm(new AdminDashboardForm(AplicatieBancara.currentUser));
             }
             catch (FormValidationException ex)
             {
-                MessageBox.Show($"Eroare formular: {ex.Message}");
+                MessageBox.Show($"Eroare formular: {ex.Message}", "Eroare", MessageBoxButtons.OK, MessageBoxIcon.Warning);
             }
             catch (PasswordValidationException ex)
             {
-                MessageBox.Show($"Eroare parolă: {ex.Message}");
+                MessageBox.Show($"Eroare parolă: {ex.Message}", "Eroare", MessageBoxButtons.OK, MessageBoxIcon.Warning);
             }
             catch (UserNotFoundException ex)
             {
-                MessageBox.Show($"Eroare: {ex.Message}");
+                MessageBox.Show($"Eroare: {ex.Message}", "Eroare", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
             catch (Exception ex)
             {
-                MessageBox.Show($"Eroare necunoscută: {ex.Message}");
+                MessageBox.Show($"Eroare necunoscută: {ex.Message}", "Eroare", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
-
-
 
         /// <summary>
         /// Revine la dashboard-ul administratorului.

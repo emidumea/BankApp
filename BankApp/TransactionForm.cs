@@ -16,85 +16,61 @@
  *                                                                        *
  **************************************************************************/
 
-
 using BankApp.Data;
 using BankApp.Exceptions;
 using System;
-using System.Linq;
 using System.Windows.Forms;
-using BankApp.Validation;
 
 namespace BankApp
 {
     /// <summary>
-    /// Formular pentru efectuarea unei tranzacții bancare.
+    /// Formular grafic pentru inițierea unei tranzacții bancare de către utilizator.
     /// </summary>
     public partial class TransactionForm : Form
     {
         private User currentUser;
 
-
         /// <summary>
-        /// Inițializează formularul pentru utilizatorul curent.
+        /// Constructor care inițializează formularul pentru utilizatorul autentificat.
         /// </summary>
-        /// <param name="user">Utilizatorul autentificat.</param>
+        /// <param name="user">Utilizatorul curent autentificat.</param>
         public TransactionForm(User user)
         {
             InitializeComponent();
             currentUser = user;
         }
 
-
         /// <summary>
-        /// Confirmă tranzacția, aplică validări și o salvează în baza de date.
+        /// Eveniment declanșat la apăsarea butonului "Confirmă".
+        /// Inițiază validarea și procesarea tranzacției prin AppService.
         /// </summary>
+        /// <param name="sender">Butonul de confirmare.</param>
+        /// <param name="e">Datele evenimentului declanșat.</param>
         private void btnConfirm_Click(object sender, EventArgs e)
         {
+            string destIban = txtDestIban.Text.Trim();
+            string sumaText = txtAmount.Text.Trim();
+
             try
             {
-                string destIban = txtDestIban.Text.Trim();
-                string sumaText = txtAmount.Text.Trim();
-
-                if (string.IsNullOrWhiteSpace(destIban) || string.IsNullOrWhiteSpace(sumaText))
-                    throw new TransactionValidationException("Completează toate câmpurile.");
-
-                if (!decimal.TryParse(sumaText, out decimal suma) || suma <= 0)
+                if (!decimal.TryParse(sumaText, out decimal suma))
                     throw new TransactionValidationException("Suma introdusă nu este validă.");
 
                 using (var context = new BankApp.Data.Data.AppDbContext())
                 {
-                    var senderUser = context.Users.FirstOrDefault(u => u.Id == currentUser.Id)
-                        ?? throw new TransactionValidationException("Expeditorul nu a fost găsit.");
+                    var service = new AppService(context);
+                    service.ExecuteTransaction(currentUser.Id, destIban, suma);
 
-                    var recipient = context.Users.FirstOrDefault(u => u.IBAN == destIban)
-                        ?? throw new TransactionValidationException("Destinatarul nu a fost găsit.");
+                    var updated = context.Users.Find(currentUser.Id);
+                    currentUser.Balance = updated.Balance;
 
-                    if (senderUser.Balance < suma)
-                        throw new InsufficientFundsException("Fonduri insuficiente pentru a efectua tranzacția.");
-
-                    // Executăm tranzacția
-                    senderUser.Balance -= suma;
-                    recipient.Balance += suma;
-
-                    context.Transactions.Add(new Transaction
-                    {
-                        FromUser = senderUser.IBAN,
-                        ToUser = recipient.IBAN,
-                        Amount = suma,
-                        Timestamp = DateTime.Now
-                    });
-
-                    context.SaveChanges();
-
-                    MessageBox.Show($"Ai trimis {suma} RON către {recipient.FullName} ({recipient.IBAN}).");
-
-                    currentUser.Balance = senderUser.Balance;
+                    MessageBox.Show($"Ai trimis {suma} RON către {destIban}.");
                     AplicatieBancara.SetNewForm(new UserDashboardForm(currentUser));
                 }
             }
             catch (TransactionValidationException ex)
             {
-                MessageBox.Show(ex.Message, "Eroare tranzacție", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                MessageBox.Show(ex.Message, "Eroare validare", MessageBoxButtons.OK, MessageBoxIcon.Warning);
             }
             catch (InsufficientFundsException ex)
             {
@@ -106,10 +82,11 @@ namespace BankApp
             }
         }
 
-
         /// <summary>
-        /// Butonul de revenire la dashboard.
+        /// Revine la dashboard-ul utilizatorului curent.
         /// </summary>
+        /// <param name="sender">Butonul "Înapoi".</param>
+        /// <param name="e">Datele evenimentului declanșat.</param>
         private void btnBack_Click(object sender, EventArgs e)
         {
             AplicatieBancara.SetNewForm(new UserDashboardForm(currentUser));

@@ -16,7 +16,6 @@
  *                                                                        *
  **************************************************************************/
 
-
 using System;
 using System.Linq;
 using System.Windows.Forms;
@@ -25,10 +24,18 @@ using BankApp.Data;
 
 namespace BankApp
 {
+    /// <summary>
+    /// Formular care afișează istoricul tranzacțiilor unui utilizator.
+    /// Permite filtrarea tranzacțiilor în funcție de tip: toate, trimise, primite.
+    /// </summary>
     public partial class TransactionHistoryForm : Form
     {
         private User currentUser;
 
+        /// <summary>
+        /// Inițializează formularul cu utilizatorul conectat și pregătește opțiunile de filtrare.
+        /// </summary>
+        /// <param name="user">Utilizatorul conectat curent.</param>
         public TransactionHistoryForm(User user)
         {
             InitializeComponent();
@@ -43,6 +50,9 @@ namespace BankApp
             cmbFilter.SelectedIndex = 0;
         }
 
+        /// <summary>
+        /// Încarcă și afișează lista tranzacțiilor filtrate în funcție de selecția utilizatorului.
+        /// </summary>
         private void LoadTransactions()
         {
             lvTransactions.Items.Clear();
@@ -78,6 +88,9 @@ namespace BankApp
             }
         }
 
+        /// <summary>
+        /// Revine la dashboard-ul utilizatorului curent.
+        /// </summary>
         private void btnBack_Click(object sender, EventArgs e)
         {
             AplicatieBancara.SetNewForm(new UserDashboardForm(currentUser));
