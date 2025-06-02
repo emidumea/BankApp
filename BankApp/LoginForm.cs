@@ -1,4 +1,38 @@
-﻿using BankApp.Administrator;
+﻿/**************************************************************************
+ *                                                                        *
+ *  File:        LoginForm.cs                                                *
+ *  Copyright:   (c) 2025, Dumea Emilian, Oancea Cosmin, Chiriac Gabriel  *
+ *  E-mail:      emilian.dumea@student.tuiasi.ro                          *
+ *  Website:     https://github.com/emidumea/BankApp                      *
+ *  Description: Formularul principal de autentificare                       *
+ *                                                                        *
+ *  This program is free software; you can redistribute it and/or modify  *
+ *  it under the terms of the GNU General Public License as published by  *
+ *  the Free Software Foundation. This program is distributed in the      *
+ *  hope that it will be useful, but WITHOUT ANY WARRANTY; without even   *
+ *  the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR   *
+ *  PURPOSE. See the GNU General Public License for more details.         *
+/**************************************************************************
+ *                                                                        *
+ *  File:        LoginForm.cs                                            *
+ *  Copyright:   (c) 2025, Dumea Emilian, Oancea Cosmin, Chiriac Gabriel *
+ *  E-mail:      emilian.dumea@student.tuiasi.ro                         *
+ *  Website:     https://github.com/emidumea/BankApp                     *
+ *  Description: Formul pentru autentificarea utilizatorului în aplicație.
+ *               Validează datele și redirecționează către dashboard.    *
+ *                                                                        *
+ *  This program is free software; you can redistribute it and/or modify *
+ *  it under the terms of the GNU General Public License as published by *
+ *  the Free Software Foundation. This program is distributed in the     *
+ *  hope that it will be useful, but WITHOUT ANY WARRANTY; without even  *
+ *  the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR  *
+ *  PURPOSE. See the GNU General Public License for more details.        *
+ *                                                                        *
+ **************************************************************************/
+
+
+
+using BankApp.Administrator;
 using BankApp.Data;
 using BankApp.Validation;
 using BankApp.Exceptions;

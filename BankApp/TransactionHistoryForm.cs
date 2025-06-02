@@ -1,4 +1,23 @@
-﻿using System;
+﻿/**************************************************************************
+ *                                                                        *
+ *  File:        TransactionHistoryForm.cs                               *
+ *  Copyright:   (c) 2025, Dumea Emilian, Oancea Cosmin, Chiriac Gabriel *
+ *  E-mail:      emilian.dumea@student.tuiasi.ro                         *
+ *  Website:     https://github.com/emidumea/BankApp                     *
+ *  Description: Afișează istoricul tranzacțiilor utilizatorului, cu     *
+ *               opțiuni de filtrare: toate, trimise, primite.           *
+ *                                                                        *
+ *  This program is free software; you can redistribute it and/or modify *
+ *  it under the terms of the GNU General Public License as published by *
+ *  the Free Software Foundation. This program is distributed in the     *
+ *  hope that it will be useful, but WITHOUT ANY WARRANTY; without even  *
+ *  the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR  *
+ *  PURPOSE. See the GNU General Public License for more details.        *
+ *                                                                        *
+ **************************************************************************/
+
+
+using System;
 using System.Linq;
 using System.Windows.Forms;
 using System.Collections.Generic;

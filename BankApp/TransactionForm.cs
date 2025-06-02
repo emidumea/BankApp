@@ -1,4 +1,23 @@
-﻿using BankApp.Data;
+﻿/**************************************************************************
+ *                                                                        *
+ *  File:        TransactionForm.cs                                      *
+ *  Copyright:   (c) 2025, Dumea Emilian, Oancea Cosmin, Chiriac Gabriel *
+ *  E-mail:      emilian.dumea@student.tuiasi.ro                         *
+ *  Website:     https://github.com/emidumea/BankApp                     *
+ *  Description: Formular pentru efectuarea unei tranzacții bancare.     *
+ *               Realizează validări și actualizează soldurile.          *
+ *                                                                        *
+ *  This program is free software; you can redistribute it and/or modify *
+ *  it under the terms of the GNU General Public License as published by *
+ *  the Free Software Foundation. This program is distributed in the     *
+ *  hope that it will be useful, but WITHOUT ANY WARRANTY; without even  *
+ *  the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR  *
+ *  PURPOSE. See the GNU General Public License for more details.        *
+ *                                                                        *
+ **************************************************************************/
+
+
+using BankApp.Data;
 using BankApp.Exceptions;
 using System;
 using System.Linq;
