@@ -34,6 +34,7 @@ namespace BankApp.Administrator
         public ResetPasswordForm()
         {
             InitializeComponent();
+
         }
 
         /// <summary>

@@ -38,6 +38,7 @@ namespace BankApp.Administrator
             cmbRole.Items.Add("User");
             cmbRole.Items.Add("Admin");
             cmbRole.SelectedIndex = 0;
+
         }
 
 

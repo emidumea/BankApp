@@ -22,6 +22,7 @@ using BankApp.Exceptions;
 using BankApp;
 using System;
 using System.Windows.Forms;
+using System.Drawing;
 
 namespace BankApp
 {
@@ -30,6 +31,7 @@ namespace BankApp
         public LoginForm()
         {
             InitializeComponent();
+            AdaugaButonAjutor();
         }
 
         /// <summary>
@@ -69,5 +71,28 @@ namespace BankApp
                 MessageBox.Show("Eroare neașteptată: " + ex.Message, "Eroare", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
+
+        private void AdaugaButonAjutor()
+        {
+            Button btnHelp = new Button();
+            btnHelp.Text = "Ajutor";
+            btnHelp.Size = new Size(70, 30);
+            btnHelp.Location = new Point(this.ClientSize.Width - 80, 10);
+            btnHelp.Anchor = AnchorStyles.Top | AnchorStyles.Right;
+            btnHelp.Click += (s, e) => AplicatieBancara.DeschideHelp(this);
+
+            this.Controls.Add(btnHelp);
+
+            // Opțional: shortcut F1
+            this.KeyPreview = true;
+            this.KeyDown += (s, e) =>
+            {
+                if (e.KeyCode == Keys.F1)
+                {
+                    AplicatieBancara.DeschideHelp(this);
+                }
+            };
+        }
+
     }
 }

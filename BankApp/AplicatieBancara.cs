@@ -1,4 +1,24 @@
-﻿using BankApp.Data;
+﻿/**************************************************************************
+ *                                                                        *
+ *  File:        AplicatieBancara.cs                                     *
+ *  Copyright:   (c) 2025, Dumea Emilian, Oancea Cosmin, Chiriac Gabriel *
+ *  E-mail:      emilian.dumea@student.tuiasi.ro                         *
+ *  Website:     https://github.com/emidumea/BankApp                     *
+ *  Description: Clasă statică ce gestionează starea generală a aplicației,
+ *               inclusiv utilizatorul curent și schimbarea formularelor.*
+ *                                                                        *
+ *  This program is free software; you can redistribute it and/or modify *
+ *  it under the terms of the GNU General Public License as published by *
+ *  the Free Software Foundation. This program is distributed in the     *
+ *  hope that it will be useful, but WITHOUT ANY WARRANTY; without even  *
+ *  the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR  *
+ *  PURPOSE. See the GNU General Public License for more details.        *
+ *                                                                        *
+ **************************************************************************/
+
+
+using BankApp.Data;
+using System;
 using System.Windows.Forms;
 
 namespace BankApp
@@ -67,6 +87,26 @@ namespace BankApp
             DeleteAllControls();
             AddAllControls(form);
             form.Dispose();
+        }
+
+        /// <summary>
+        /// Deschide fișierul .chm de help al aplicației.
+        /// </summary>
+        public static void DeschideHelp(Form owner)
+        {
+            string path = System.IO.Path.Combine(
+                Environment.CurrentDirectory,
+                "Help Aplicatie Bancara.chm"
+            );
+
+            if (System.IO.File.Exists(path))
+            {
+                Help.ShowHelp(owner, path);
+            }
+            else
+            {
+                MessageBox.Show("Fișierul de help nu a fost găsit.", "Eroare", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
         }
     }
 }
